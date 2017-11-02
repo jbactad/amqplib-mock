@@ -1,0 +1,31 @@
+{
+  "name": "amqplib-mock",
+  "version": "0.0.1",
+  "description": "Mock library for amqplib with promise and callback api support.",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "mocha test/ --recursive --exit --reporter spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joshjim-bactad/amqplib-mock.git"
+  },
+  "keywords": [
+    "mock",
+    "amqplib",
+    "amqp",
+    "test"
+  ],
+  "author": "Jim Geoshua P. Bactad",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/joshjim-bactad/amqplib-mock/issues"
+  },
+  "homepage": "https://github.com/joshjim-bactad/amqplib-mock#readme",
+  "devDependencies": {
+    "mocha": "^4.0.1"
+  }
+}
