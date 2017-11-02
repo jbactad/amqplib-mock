@@ -4,44 +4,51 @@ var exchanges = {};
 var queues = {};
 var channel = {
   assertQueue: function (queue, qOptions) {
-    setIfUndef(queues, queue, { messages: [], subscribers: [], options: qOptions });
-
-    return Promise.resolve();
+    return new Promise(function (resolve) {
+      setIfUndef(queues, queue, { messages: [], subscribers: [], options: qOptions });
+      return resolve();
+    });
   },
 
   assertExchange: function (exchange, type, exchOptions) {
-    exchOptions = exchOptions || {};
-    setIfUndef(exchanges, exchange, { bindings: [], options: exchOptions, type: type });
+    return new Promise(function (resolve) {
+      exchOptions = exchOptions || {};
+      setIfUndef(exchanges, exchange, { bindings: [], options: exchOptions, type: type });
 
-    return Promise.resolve();
+      return resolve();
+    });
   },
 
   bindQueue: function (queue, exchange, key, args) {
-    if (!exchanges[exchange])
-      return Promise.reject("Bind to non-existing exchange " + exchange);
+    return new Promise(function (resolve, reject) {
+      if (!exchanges[exchange])
+        return reject("Bind to non-existing exchange " + exchange);
 
-    var re = "^" + key.replace(".", "\\.").replace("#", "(\\w|\\.)+").replace("*", "\\w+") + "$";
-    exchanges[exchange].bindings.push({ regex: new RegExp(re), queueName: queue });
+      var re = "^" + key.replace(".", "\\.").replace("#", "(\\w|\\.)+").replace("*", "\\w+") + "$";
+      exchanges[exchange].bindings.push({ regex: new RegExp(re), queueName: queue });
 
-    return Promise.resolve();
+      return resolve();
+    });
   },
 
   publish: function (exchange, routingKey, content, props) {
-    if (!exchanges[exchange])
-      return Promise.reject("Publish to non-existing exchange " + exchange);
+    return new Promise(function (resolve, reject) {
+      if (!exchanges[exchange])
+        return reject("Publish to non-existing exchange " + exchange);
 
-    var bindings = exchanges[exchange].bindings;
-    var matchingBindings = bindings.filter(function (b) { return b.regex.test(routingKey); });
+      var bindings = exchanges[exchange].bindings;
+      var matchingBindings = bindings.filter(function (b) { return b.regex.test(routingKey); });
 
-    matchingBindings.forEach(function (binding) {
-      var subscribers = queues[binding.queueName] ? queues[binding.queueName].subscribers : [];
-      subscribers.forEach(function (sub) {
-        var message = { fields: { routingKey: routingKey }, properties: props, content: content };
-        sub(message);
+      matchingBindings.forEach(function (binding) {
+        var subscribers = queues[binding.queueName] ? queues[binding.queueName].subscribers : [];
+        subscribers.forEach(function (sub) {
+          var message = { fields: { routingKey: routingKey }, properties: props, content: content };
+          sub(message);
+        });
       });
-    });
 
-    return Promise.resolve();
+      return resolve();
+    })
   },
 
   consume: function (queue, handler) {
@@ -60,16 +67,21 @@ var channel = {
   on: function () { }
 };
 function createChannel() {
-  return Promise.resolve(channel);
+  return new Promise(function (resolve) {
+    return resolve(channel);
+  });
 };
 function connect(url, options) {
-  var connection = {
-    createChannel: createChannel,
-    createConfirmChannel: createChannel,
-    on: function () { }
-  };
+  return new Promise(function (resolve) {
 
-  return Promise.resolve(connection);
+    var connection = {
+      createChannel: createChannel,
+      createConfirmChannel: createChannel,
+      on: function () { }
+    };
+
+    return resolve(connection);
+  });
 }
 
 function resetMock() {
