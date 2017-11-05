@@ -64,7 +64,10 @@ var channel = {
   ack: function () { },
   nack: function () { },
   prefetch: function () { },
-  on: function () { }
+  on: function () { },
+  close: function () {
+    return Promise.resolve();
+  }
 };
 function createChannel() {
   return new Promise(function (resolve) {

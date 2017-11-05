@@ -62,7 +62,12 @@ function connect(url, options, connCallback) {
       ack: function () { },
       nack: function () { },
       prefetch: function () { },
-      on: function () { }
+      on: function () { },
+      close: function (callback) {
+        callback = callback || function () { };
+
+        return callback();
+      }
     };
     channelCallback(null, channel);
   };
