@@ -80,7 +80,10 @@ function connect(url, options) {
     var connection = {
       createChannel: createChannel,
       createConfirmChannel: createChannel,
-      on: function () { }
+      on: function () { },
+      close: function () {
+        return Promise.resolve();
+      }
     };
 
     return resolve(connection);

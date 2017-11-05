@@ -75,7 +75,11 @@ function connect(url, options, connCallback) {
   var connection = {
     createChannel: createChannel,
     createConfirmChannel: createChannel,
-    on: function () { }
+    on: function () { },
+    close: function (callback) {
+      callback = callback || function () { };
+      return callback();
+    }
   };
 
   connCallback(null, connection);
