@@ -1,6 +1,6 @@
 {
   "name": "amqplib-mock",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Mock library for amqplib with promise and callback api support.",
   "main": "index.js",
   "directories": {
