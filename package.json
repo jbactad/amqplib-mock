@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/joshjim-bactad/amqplib-mock.git"
+    "url": "git+https://github.com/jbactad/amqplib-mock.git"
   },
   "keywords": [
     "mock",
@@ -22,10 +22,10 @@
   "author": "Jim Geoshua P. Bactad",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/joshjim-bactad/amqplib-mock/issues"
+    "url": "https://github.com/jbactad/amqplib-mock/issues"
   },
-  "homepage": "https://github.com/joshjim-bactad/amqplib-mock#readme",
+  "homepage": "https://github.com/jbactad/amqplib-mock#readme",
   "devDependencies": {
-    "mocha": "^4.0.1"
+    "mocha": "^4.1.0"
   }
 }
