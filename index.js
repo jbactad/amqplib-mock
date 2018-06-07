@@ -65,6 +65,7 @@ var channel = {
   nack: function () { },
   prefetch: function () { },
   on: function () { },
+  once: function () { },
   close: function () {
     return Bluebird.resolve();
   }
