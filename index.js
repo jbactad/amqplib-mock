@@ -1,17 +1,17 @@
 "use strict";
-
+var Bluebird = require('bluebird');
 var exchanges = {};
 var queues = {};
 var channel = {
   assertQueue: function (queue, qOptions) {
-    return new Promise(function (resolve) {
+    return new Bluebird(function (resolve) {
       setIfUndef(queues, queue, { messages: [], subscribers: [], options: qOptions });
       return resolve();
     });
   },
 
   assertExchange: function (exchange, type, exchOptions) {
-    return new Promise(function (resolve) {
+    return new Bluebird(function (resolve) {
       exchOptions = exchOptions || {};
       setIfUndef(exchanges, exchange, { bindings: [], options: exchOptions, type: type });
 
@@ -20,7 +20,7 @@ var channel = {
   },
 
   bindQueue: function (queue, exchange, key, args) {
-    return new Promise(function (resolve, reject) {
+    return new Bluebird(function (resolve, reject) {
       if (!exchanges[exchange])
         return reject("Bind to non-existing exchange " + exchange);
 
@@ -32,7 +32,7 @@ var channel = {
   },
 
   publish: function (exchange, routingKey, content, props) {
-    return new Promise(function (resolve, reject) {
+    return new Bluebird(function (resolve, reject) {
       if (!exchanges[exchange])
         return reject("Publish to non-existing exchange " + exchange);
 
@@ -66,23 +66,23 @@ var channel = {
   prefetch: function () { },
   on: function () { },
   close: function () {
-    return Promise.resolve();
+    return Bluebird.resolve();
   }
 };
 function createChannel() {
-  return new Promise(function (resolve) {
+  return new Bluebird(function (resolve) {
     return resolve(channel);
   });
 };
 function connect(url, options) {
-  return new Promise(function (resolve) {
+  return new Bluebird(function (resolve) {
 
     var connection = {
       createChannel: createChannel,
       createConfirmChannel: createChannel,
       on: function () { },
       close: function () {
-        return Promise.resolve();
+        return Bluebird.resolve();
       }
     };
 

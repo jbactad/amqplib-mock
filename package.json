@@ -27,5 +27,8 @@
   "homepage": "https://github.com/jbactad/amqplib-mock#readme",
   "devDependencies": {
     "mocha": "^4.1.0"
+  },
+  "dependencies": {
+    "bluebird": "^3.5.1"
   }
 }
