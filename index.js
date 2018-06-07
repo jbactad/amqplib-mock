@@ -82,6 +82,7 @@ function connect(url, options) {
       createChannel: createChannel,
       createConfirmChannel: createChannel,
       on: function () { },
+      once: function () { },
       close: function () {
         return Bluebird.resolve();
       }
